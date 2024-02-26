@@ -78,26 +78,37 @@
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css' integrity='sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg==' crossorigin='anonymous'/>
 </head>
 <body>
-    
-    <ol>
-        <?php foreach ($hotels as $hotel): ?>
-
-            <li>
-
-                <ul>
-                    
-                    <?php foreach ($hotel as $key => $value): ?>
-
-                        <?= "<li>{$key}: {$value}</li>" ?>
-
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <?php foreach ($hotels[0] as $key => $value): ?>
+                        <th scope="col">
+                            <?= ucwords(str_replace('_', ' ', $key)) ?>
+                        </th>
                     <?php endforeach; ?>
-
-                </ul>
-
-            </li>
-
-        <?php endforeach; ?>
-    </ol>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($hotels as $hotel): ?>
+                    <tr>
+                        <?php foreach ($hotel as $key => $value): ?>
+                            <td>
+                                <?php 
+                                    if ($key == 'parking') {
+                                        $value ? $parcheggio = 'Si' : $parcheggio = 'No';
+                                        echo $parcheggio;
+                                    } else {
+                                        echo $value;
+                                    }
+                                ?>
+                            </td>
+                        <?php endforeach; ?>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
     
 
     <!-- Js Bootstrap -->
