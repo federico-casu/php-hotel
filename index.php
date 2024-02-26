@@ -63,7 +63,9 @@
 
     ];
 
-    // var_dump($hotels);
+    $parking_filter = $_GET['parcheggio'];
+
+    var_dump($parking_filter);
 
 ?>
 
@@ -79,6 +81,34 @@
 </head>
 <body>
     <div class="container">
+        <form action="index.php" method="get">
+            <label for="parcheggio" class="fw-bold">Parcheggio</label>
+            <div class="d-flex gap-3 my-2">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="parcheggio" value="1" />
+                    <label class="form-check-label" for="parcheggio"> Yes </label>
+                </div>
+                <div class="form-check">
+                    <input
+                        class="form-check-input"
+                        type="radio"
+                        name="parcheggio"
+                        value="0"
+                    />
+                    <label class="form-check-label" for="parcheggio">
+                        No
+                    </label>
+                </div>
+            </div>
+            <button
+                type="submit"
+                class="btn btn-primary"
+            >
+                Filtra
+            </button>
+            
+        </form>
+
         <table class="table">
             <thead>
                 <tr>
@@ -91,20 +121,22 @@
             </thead>
             <tbody>
                 <?php foreach ($hotels as $hotel): ?>
-                    <tr>
-                        <?php foreach ($hotel as $key => $value): ?>
-                            <td>
-                                <?php 
-                                    if ($key == 'parking') {
-                                        $value ? $parcheggio = 'Si' : $parcheggio = 'No';
-                                        echo $parcheggio;
-                                    } else {
-                                        echo $value;
-                                    }
-                                ?>
-                            </td>
-                        <?php endforeach; ?>
-                    </tr>
+                    <?php if ( $parking_filter == $hotel['parking'] || $parking_filter == null ) { ?>
+                        <tr>
+                            <?php foreach ($hotel as $key => $value): ?>
+                                <td>
+                                    <?php 
+                                        if ($key == 'parking') {
+                                            $value ? $parcheggio = 'Si' : $parcheggio = 'No';
+                                            echo $parcheggio;
+                                        } else {
+                                            echo $value;
+                                        }
+                                    ?>
+                                </td>
+                            <?php endforeach; ?>
+                        </tr>
+                    <?php } ?>
                 <?php endforeach; ?>
             </tbody>
         </table>
