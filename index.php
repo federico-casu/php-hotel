@@ -63,9 +63,11 @@
 
     ];
 
-    $parking_filter = $_GET['parcheggio'];
+    $parking_filter = $_GET['parcheggio'] ?? null;
+    $vote_filter = $_GET['voto'] ?? null;
 
     var_dump($parking_filter);
+    var_dump($vote_filter);
 
 ?>
 
@@ -82,24 +84,47 @@
 <body>
     <div class="container">
         <form action="index.php" method="get">
-            <label for="parcheggio" class="fw-bold">Parcheggio</label>
-            <div class="d-flex gap-3 my-2">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="parcheggio" value="1" />
-                    <label class="form-check-label" for="parcheggio"> Yes </label>
+            <div class="row d-flex">
+                <div id="parcheggio" class="col-6">
+                    <label for="parcheggio" class="fw-bold">Parcheggio</label>
+                    <div class="d-flex gap-3 my-2">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="parcheggio" value="1" />
+                            <label class="form-check-label" for="parcheggio"> Yes </label>
+                        </div>
+                        <div class="form-check">
+                            <input
+                                class="form-check-input"
+                                type="radio"
+                                name="parcheggio"
+                                value="0"
+                            />
+                            <label class="form-check-label" for="parcheggio">
+                                No
+                            </label>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-check">
-                    <input
-                        class="form-check-input"
-                        type="radio"
-                        name="parcheggio"
-                        value="0"
-                    />
-                    <label class="form-check-label" for="parcheggio">
-                        No
-                    </label>
+                <div id="voto" class="col-6">
+                    <div class="mb-3">
+                        <label for="voto" class="form-label">Voto</label>
+                        <select
+                            class="form-select form-select-lg"
+                            name="voto"
+                        >
+                            <option selected>Select one</option>
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    
                 </div>
             </div>
+            
             <button
                 type="submit"
                 class="btn btn-primary"
@@ -121,7 +146,7 @@
             </thead>
             <tbody>
                 <?php foreach ($hotels as $hotel): ?>
-                    <?php if ( $parking_filter == $hotel['parking'] || $parking_filter == null ) { ?>
+                    <?php if ( ($parking_filter == $hotel['parking'] || $parking_filter == null) &&  ($vote_filter == $hotel['vote'] || $vote_filter == 'Select one')) { ?>
                         <tr>
                             <?php foreach ($hotel as $key => $value): ?>
                                 <td>
